@@ -1,0 +1,47 @@
+Nume: Ciineanu Stefan-Andrei
+Grupa: 336CA
+Username pe ACS: stefan.ciineanu
+
+Pentru aceasta tema am inceput de la laboratorul 2/task 3/ si am extins 
+implementarea pe baza scheletului de cod dat.
+
+Initial am inceput completarea constructorilor. Pt producer am adaugat 3 
+campuri auxiliare pt a extrage [“id”, cantitate, timp-așteptare] din lista
+de produse. var_succes va reprezenta o variabila booleana in toti constructorii
+In consumer am adaugat o variabila contor prin care parcurg nr. de produse 
+pt. care fac add/remove. In marketplace am variabile cu ajutorul carora generez
+id-urile random, liste cu aceste id-uri, 4 dictionare: id_producer - nr. 
+obiecte, id_producer - lista de obiecte, id_producer - produsul generat, 
+id_cart - lista de obiecte din cos. Pe langa acestea mai avem nevoie de 2 
+semafoare pt sincronizare, unul pt printf-ul din place_order (altfel pica
+testul 10) si altul pt. adaugarea produselor in cos.
+
+In marketplace.py pt. inceput inregistrez producerii si carturile: le creez
+un unic id random < 20000 respectiv 1000000 (m-am gandit ca sunt mai multe 
+carturi decat produceri). Unicitatea id-urilor este asigurata de liste care
+contin id-urile precedente (verific cand generez unul nou daca se afla in 
+aceaste liste). In register_producer/cart initializez mapurile si returnez 
+id-ul generat. In publish, adaug produsul in cele 3 dictionare aferente 
+producerului in functie de id (cheie), actualizand valorile. Pentru add_cart
+parcurg mapul cu id_producator si lista de produse si verific daca produsul
+dat in antetul functiei exista (a fost published de producer), daca exista
+elimin produsul din lista de produse disponibile ale producerului si il adaug
+in cart. Remove_from_cart este operatia prezentata mai sus, doar ca invers
+(adaug in producer list produsul si il sterg din cart list). In place_order, 
+extrag lista de produse corespunzatoare id-ului cartului si le afisez in 
+terminal impreuna cu threadul curent.
+
+In producer.py se creeaza incontinuu produse si se simuleaza prin sleep timpul
+de fabricare al unui produs sau un timp de cooldown. Generarea produselor se
+face iterativ printr-un for pana la catitatea maxima de produse, iar intr-un 
+while se va face publish la aceste produse.
+
+Pentru consumer.py am parcurs lista de carturi si parametrii add/remove pt 
+fiecare cart, iar pt. fiecare parametru in functie de cantitatea dorita voi 
+adauga sau scoate produsul din cart, iar in final va face place_order. Daca 
+primeste eroare va trebui sa astepte un timp de retry.
+
+Lucruri interesante: Am aplicat expresiile lambda de la PP in crearea unor 
+functii ajutatoare, am inteles mai bine multi threading
+Lucruri dificile: debug pe threaduri in python, pt a rula testele trebuia
+implementat tot scheletul de cod
